@@ -3,7 +3,7 @@ package com.msop.lotterie.fidem;
 import java.io.IOException;
 
 import com.msop.lotterie.fidem.client.controller.ControllerWrapper;
-import com.msop.lotterie.fidem.command.CommandBuilder;
+import com.msop.lotterie.fidem.command.CommandFactory;
 import com.msop.lotterie.fidem.game.Game;
 import com.msop.lotterie.fidem.validator.ValidatorMapping;
 
@@ -55,7 +55,7 @@ public class WorkflowEngine {
 	 */
 	public void excute() throws IOException {
 		game.getCommands().clear();
-		game.getCommands().addAll(CommandBuilder.buildCommands(this.command));
+		game.getCommands().addAll(CommandFactory.buildCommands(this.command));
 		game.executeCommand();
 		
 		this.command = ControllerWrapper.getInputWithValidation(GameConstant.getEndMessageOfCommand(), ValidatorMapping.COMMAND.getValidators());

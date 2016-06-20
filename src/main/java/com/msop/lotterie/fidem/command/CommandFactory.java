@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * The Class CommandBuilder.
  */
-public final class CommandBuilder {
+public final class CommandFactory {
 
 	/**
 	 * Instantiates a new command builder.
 	 */
-	private CommandBuilder() {
+	private CommandFactory() {
 		
 	}
 

@@ -1,6 +1,6 @@
 package com.msop.lotterie.fidem.validator;
 
-import com.msop.lotterie.fidem.command.CommandBuilder;
+import com.msop.lotterie.fidem.command.CommandFactory;
 
 /**
  * The Class CommandOutEnumValidator.
@@ -24,7 +24,7 @@ public class CommandOutEnumValidator implements InputValidator {
 	 * @see com.msop.lotterie.fidem.validator.InputValidator#validate(java.lang.String)
 	 */
 	public String validate(String input) {
-		boolean isPassed = !CommandBuilder.buildCommands(input).isEmpty();
+		boolean isPassed = !CommandFactory.buildCommands(input).isEmpty();
 		if (!isPassed) {
 			return errorMessage;
 		}
