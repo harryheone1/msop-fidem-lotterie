@@ -3,33 +3,99 @@ package com.msop.lotterie.fidem.configuation;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.msop.lotterie.fidem.client.drawer.ConsoleDrawer;
+import com.msop.lotterie.fidem.client.drawer.Drawer;
+
 /**
  * The Class GameConfiguration.
  */
-public final class GameConfiguration {
+public class GameConfiguration {
 
-	/** The Constant INITIAL_NUMBER. */
-	public static final Integer INITIAL_NUMBER = 200;
+	/** The instance. */
+	private static GameConfiguration instance = null;
+
+	/** The initial number. */
+	private Integer initialNumber;
+
+	/** The max command per game. */
+	private Integer maxCommandPerGame;
+
+	/** The factor to win. */
+	private Double factorToWin;
 	
-	/** The Constant MAX_COMMAND_PER_GAME. */
-	public static final Integer MAX_COMMAND_PER_GAME = 100;
+	/** The drawer. */
+	private Drawer drawer = new ConsoleDrawer();
+	
 
-	/** The Constant FACTOR. */
-	private static final Double FACTOR = 0.5;
+	/**
+	 * Gets the drawer.
+	 *
+	 * @return the drawer
+	 */
+	public Drawer getDrawer() {
+		return drawer;
+	}
 
 	/**
 	 * Instantiates a new game configuration.
+	 *
+	 * @param initialNumber the initial number
+	 * @param maxCommandPerGame the max command per game
+	 * @param factorToWin the factor to win
 	 */
-	private GameConfiguration() {
+	private GameConfiguration(Integer initialNumber, Integer maxCommandPerGame,
+			Double factorToWin) {
+		this.initialNumber = initialNumber;
+		this.maxCommandPerGame = maxCommandPerGame;
+		this.factorToWin = factorToWin;
 	}
+
+	/**
+	 * Gets the single instance of GameConfiguration.
+	 *
+	 * @param initialNumber the initial number
+	 * @param maxCommandPerGame the max command per game
+	 * @param factorToWin the factor to win
+	 * @return single instance of GameConfiguration
+	 */
+	public static GameConfiguration getInstance(Integer initialNumber, Integer maxCommandPerGame,
+			Double factorToWin) {
+		if (instance == null) {
+			synchronized (GameConfiguration.class) {
+				if (instance == null) {
+					instance = new GameConfiguration(initialNumber, maxCommandPerGame, factorToWin);
+				}
+			}
+		}
+		return instance;
+	}
+
+	/**
+	 * Gets the single instance of GameConfiguration.
+	 *
+	 * @return single instance of GameConfiguration
+	 */
+	public static GameConfiguration getInstance() {
+		return instance;
+	}
+			
+	/**
+	 * Gets the max command.
+	 *
+	 * @return the max command
+	 */
+	public Integer getMaxCommand() {
+		return this.maxCommandPerGame;
+	}
+
 	/**
 	 * Inits the available number.
 	 *
 	 * @return the list
 	 */
-	public static List<Integer> initAvailableNumber() {
+	public List<Integer> initAvailableNumber() {
 		List<Integer> result = new ArrayList<Integer>();
-		for (int i = 0; i < INITIAL_NUMBER; i++) {
+		for (int i = 0; i < initialNumber; i++) {
 			result.add(i + 1);
 		}
 		return result;
@@ -41,22 +107,23 @@ public final class GameConfiguration {
 	 * @param key the key
 	 * @return the shared amount
 	 */
-	public static Integer getSharedAmount(Integer key) {
+	public Integer getSharedAmount(Integer key) {
 		Double sharedRate = getShared(key);
 		if (sharedRate != null) {
 			return (int) (sharedRate * getWinnerTotalAmount());
 		} else {
 			return 0;
 		}
-		
+
 	}
+
 	/**
 	 * Gets the winner total amount.
 	 *
 	 * @return the winner total amount
 	 */
-	public static Double getWinnerTotalAmount() {
-		return INITIAL_NUMBER * FACTOR;
+	public Double getWinnerTotalAmount() {
+		return initialNumber * factorToWin;
 	}
 
 	/**
@@ -65,7 +132,7 @@ public final class GameConfiguration {
 	 * @param key the key
 	 * @return the shared
 	 */
-	private static Double getShared(Integer key) {
+	private Double getShared(Integer key) {
 		for (WinnerShare winnerShare : WinnerShare.values()) {
 			if (winnerShare.getKey().equals(key)) {
 				return winnerShare.getRate();
@@ -73,32 +140,33 @@ public final class GameConfiguration {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the winner number.
 	 *
 	 * @return the winner number
 	 */
-	public static Integer getWinnerNumber() {
+	public Integer getWinnerNumber() {
 		return WinnerShare.values().length;
 	}
+
 	/**
 	 * The Enum WinnerShare.
 	 */
 	private enum WinnerShare {
-		
+
 		/** The first. */
 		FIRST(1, 0.75),
-		
+
 		/** The second. */
 		SECOND(2, 0.15),
-		
+
 		/** The thrid. */
 		THRID(3, 0.10);
 
 		/** The key. */
 		private Integer key;
-		
+
 		/**
 		 * Gets the key.
 		 *
@@ -123,12 +191,32 @@ public final class GameConfiguration {
 		/**
 		 * Instantiates a new winner share.
 		 *
-		 * @param key the key
-		 * @param rate the rate
+		 * @param key
+		 *            the key
+		 * @param rate
+		 *            the rate
 		 */
 		private WinnerShare(Integer key, Double rate) {
 			this.key = key;
 			this.rate = rate;
 		}
+	}
+	
+	/**
+	 * Gets the initial number.
+	 *
+	 * @return the initial number
+	 */
+	public Integer getInitialNumber() {
+		return initialNumber;
+	}
+
+	/**
+	 * Gets the factor to win.
+	 *
+	 * @return the factor to win
+	 */
+	public Double getFactorToWin() {
+		return factorToWin;
 	}
 }

@@ -7,6 +7,9 @@ import com.msop.lotterie.fidem.command.CommandRules;
  */
 public final class GameConstant {
 
+	/**
+	 * Instantiates a new game constant.
+	 */
 	private GameConstant() {
 		
 	}
@@ -50,6 +53,7 @@ public final class GameConstant {
 	/** The Constant NUMBER_NOT_VALID. */
 	public static final String NUMBER_NOT_VALID = "The Number that you choose is not valid ! ";
 	
+	/** The Constant VALIDATION_FAILED_MESSAGE_SUFFIX. */
 	public static final String VALIDATION_FAILED_MESSAGE_SUFFIX = "Please enter another one : ";
 	
 	/** The Constant FIRST_SUFFIX. */
@@ -58,10 +62,13 @@ public final class GameConstant {
 	/** The Constant OTHER_SUFFIX. */
 	public static final String OTHER_SUFFIX = "eme";
 	
+	/** The Constant RESULT_BOULE. */
 	public static final String RESULT_BOULE = " boule";
 
+	/** The Constant TWO_TAPE_SPACE. */
 	public static final String TWO_TAPE_SPACE = "		";
 
+	/** The Constant RESULT_DOLLAR. */
 	public static final String RESULT_DOLLAR = "$";
 	
 	/**
@@ -72,7 +79,7 @@ public final class GameConstant {
 	public static String getInitialMessage() {
 		StringBuilder result = new StringBuilder(INITIAL_MESSAGE + "\n");
 		for (CommandRules commandRules : CommandRules.values()) {
-			result.append(commandRules.getInputCommand()).append("\n");
+			result.append(commandRules.getCommandName()).append("\n");
 		}
 		return result.toString();
 	}
@@ -85,7 +92,7 @@ public final class GameConstant {
 	public static String getEndMessageOfCommand() {
 		StringBuilder result = new StringBuilder(COMMAND_FINISH_MESSAGE + "\n");
 		for (CommandRules commandRules : CommandRules.values()) {
-			result.append(commandRules.getInputCommand()).append("\n");
+			result.append(commandRules.getCommandName()).append("\n");
 		}
 		return result.toString();
 	}
@@ -98,7 +105,7 @@ public final class GameConstant {
 	public static String getEndMessageOfGame() {
 		StringBuilder result = new StringBuilder(LOTO_FINISH_MESSAGE + "\n");
 		for (CommandRules commandRules : CommandRules.values()) {
-			result.append(commandRules.getInputCommand()).append("\n");
+			result.append(commandRules.getCommandName()).append("\n");
 		}
 		return result.toString();
 	}

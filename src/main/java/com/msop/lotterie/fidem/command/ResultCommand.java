@@ -3,10 +3,7 @@ package com.msop.lotterie.fidem.command;
 import java.io.IOException;
 
 import com.msop.lotterie.fidem.GameConstant;
-import com.msop.lotterie.fidem.client.controller.Controller;
-import com.msop.lotterie.fidem.client.controller.ControllerSimpleFactory;
-import com.msop.lotterie.fidem.client.controller.ControllerWrapper;
-import com.msop.lotterie.fidem.client.model.ConsoleModel;
+import com.msop.lotterie.fidem.client.GeneralClientFacade;
 import com.msop.lotterie.fidem.configuation.GameConfiguration;
 import com.msop.lotterie.fidem.game.Game;
 import com.msop.lotterie.fidem.validator.ValidatorMapping;
@@ -30,7 +27,7 @@ public class ResultCommand implements Command {
 		StringBuilder line1 = new StringBuilder();
 		StringBuilder line2 = new StringBuilder();
 		for (Integer order : game.getWinnerNumer().keySet()) {
-			String money = String.valueOf(GameConfiguration.getSharedAmount(count));
+			String money = String.valueOf(GameConfiguration.getInstance().getSharedAmount(count));
 			line1.append(count).append(getSuffix(count)).append(GameConstant.RESULT_BOULE);
 			String winnerName = game.getBuyedNumber().get(game.getWinnerNumer().get(order));
 			String outputName = winnerName != null ? winnerName : GameConstant.SPACE;
@@ -53,12 +50,10 @@ public class ResultCommand implements Command {
 				throw new IOException();
 			}
 			String result = (line1.append("\n").append(line2).append("\n").append(GameConstant.getEndMessageOfGame())).toString();
-			ControllerWrapper.getInputWithValidation(result, ValidatorMapping.COMMAND.getValidators());
+			GeneralClientFacade.getInstance().getInputWithValidation(result, ValidatorMapping.COMMAND.getValidators());
 		} catch (IOException e) {
 			this.errorMessage = "Some errors happend when read or write data to console";
-			ConsoleModel model = new ConsoleModel(errorMessage, null);
-			Controller controller = ControllerSimpleFactory.getController(null);
-			controller.output(model);
+			GeneralClientFacade.getInstance().outputFetalErrorMessage(errorMessage);
 		}
 	}
 

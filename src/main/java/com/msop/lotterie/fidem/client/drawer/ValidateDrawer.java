@@ -1,4 +1,4 @@
-package com.msop.lotterie.fidem.client.controller;
+package com.msop.lotterie.fidem.client.drawer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,40 +12,33 @@ import com.msop.lotterie.fidem.validator.InputValidator;
 /**
  * The Class ClientValidateController.
  */
-public class ClientValidateController implements Controller {
+public class ValidateDrawer implements Drawer {
 
-	/** The base controller. */
-	private Controller baseController;  	
+	/** The basic drawer. */
+	private Drawer basicDrawer;  	
 	
 	/** The validators. */
 	private List<InputValidator> validators;
 	
 
-	/* (non-Javadoc)
-	 * @see com.msop.lotterie.fidem.client.Controller#inputRequest()
-	 */
-	public void output(ConsoleModel model) {
-		baseController.output(model);
-	}
-
-
 	/**
-	 * Instantiates a new client validate controller.
+	 * Instantiates a new validate drawer.
 	 *
-	 * @param prompt the prompt
 	 * @param validators the validators
+	 * @param basicDrawer the basic drawer
 	 */
-	public ClientValidateController(List<InputValidator> validators) {
-		this.baseController = new BasicClientController();
+	public ValidateDrawer(List<InputValidator> validators, Drawer basicDrawer) {
+		this.basicDrawer = basicDrawer;
 		this.validators = validators;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see com.msop.lotterie.fidem.client.Controller#inputPass()
+	 * @see com.msop.lotterie.fidem.client.drawer.Drawer#getInput(com.msop.lotterie.fidem.client.model.ConsoleModel)
 	 */
+	@Override
 	public void getInput(ConsoleModel model) throws IOException {
-		baseController.getInput(model);
+		basicDrawer.getInput(model);
 
 		Set<String> validationFailedMessage = new HashSet<String>();
 		if (validators != null) {
@@ -63,9 +56,4 @@ public class ClientValidateController implements Controller {
 		}
 	}
 
-
-	public void outputError(ConsoleModel model) {
-		baseController.outputError(model);
-		
-	}
 }

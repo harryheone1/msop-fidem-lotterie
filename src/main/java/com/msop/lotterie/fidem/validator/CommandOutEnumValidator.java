@@ -24,7 +24,7 @@ public class CommandOutEnumValidator implements InputValidator {
 	 * @see com.msop.lotterie.fidem.validator.InputValidator#validate(java.lang.String)
 	 */
 	public String validate(String input) {
-		boolean isPassed = !CommandFactory.buildCommands(input).isEmpty();
+		boolean isPassed = !CommandFactory.findCommands(input).isEmpty();
 		if (!isPassed) {
 			return errorMessage;
 		}

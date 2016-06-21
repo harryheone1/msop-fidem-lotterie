@@ -14,7 +14,10 @@ import com.msop.lotterie.fidem.configuation.GameConfiguration;
  * The Class Game.
  */
 public class Game {
-	
+
+	/** The initial available numer. */
+	private final List<Integer> initialAvailableNumer = new LinkedList<Integer>();
+
 	/** The available numer. */
 	private List<Integer> availableNumer = new LinkedList<Integer>();
 	
@@ -28,7 +31,8 @@ public class Game {
 	private List<Command> commands;
 	
 	{
-		availableNumer.addAll(GameConfiguration.initAvailableNumber());
+		availableNumer.addAll(GameConfiguration.getInstance().initAvailableNumber());
+		initialAvailableNumer.addAll(GameConfiguration.getInstance().initAvailableNumber());
 	}
 
 	/**
@@ -82,6 +86,15 @@ public class Game {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Gets the initial available numer.
+	 *
+	 * @return the initial available numer
+	 */
+	public List<Integer> getInitialAvailableNumer() {
+		return initialAvailableNumer;
 	}
 
 }

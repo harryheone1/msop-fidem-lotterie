@@ -21,7 +21,7 @@ public final class CommandFactory {
 	 * @param commands the commands
 	 * @return the list
 	 */
-	public static List<Command> buildCommands(String... commands) {
+	public static List<Command> findCommands(String... commands) {
 		List<Command> results = new ArrayList<Command>();
 		for (String inputCommand : commands) {
 			Command command = findCommand(inputCommand);
@@ -35,12 +35,12 @@ public final class CommandFactory {
 	/**
 	 * Find command.
 	 *
-	 * @param command the command
+	 * @param commandName the command
 	 * @return the command
 	 */
-	private static Command findCommand(String command) {
+	private static Command findCommand(String commandName) {
 		for (CommandRules commandRule : CommandRules.values()) {
-			if (commandEquals(commandRule.getInputCommand(), command)) {
+			if (commandEquals(commandRule.getCommandName(), commandName)) {
 				return commandRule.getCommand();
 			}
 		}

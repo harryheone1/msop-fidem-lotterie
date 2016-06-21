@@ -1,6 +1,7 @@
 package com.msop.lotterie.fidem.command;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.msop.lotterie.fidem.configuation.GameConfiguration;
@@ -8,13 +9,18 @@ import com.msop.lotterie.fidem.game.Game;
 
 public class ResultCommandTest {
 
+	@BeforeClass
+    public static void beforeClass() {
+    	GameConfiguration.getInstance(5, 7, 20.0);
+    }
+
 	@Test
 	public void testBuyCommand() {
 		ResultCommand command = new ResultCommand();
 		Game game = new Game();
 		game.getCommands().add(new LaunchCommand());
 		game.getCommands().add(command);
-		for (int i = 0; i < GameConfiguration.INITIAL_NUMBER; i++) {
+		for (int i = 0; i < GameConfiguration.getInstance().getInitialNumber(); i++) {
 			game.getBuyedNumber().put(i, String.valueOf(i) + "p");
 		}
 
@@ -27,7 +33,7 @@ public class ResultCommandTest {
 		Game game = new Game();
 		game.getCommands().add(new LaunchCommand());
 		game.getCommands().add(command);
-		for (int i = 0; i < GameConfiguration.INITIAL_NUMBER; i++) {
+		for (int i = 0; i < GameConfiguration.getInstance().getInitialNumber(); i++) {
 			game.getBuyedNumber().put(i, String.valueOf(i) + "pencipaikdiag");
 		}
 

@@ -1,29 +1,14 @@
-package com.msop.lotterie.fidem.client.controller;
+package com.msop.lotterie.fidem.client.drawer;
 
 import java.io.IOException;
 
 import com.msop.lotterie.fidem.client.model.ConsoleModel;
 
-
 /**
- * The Interface Controller.
+ * The Interface Drawer.
  */
-public interface Controller {
+public interface Drawer {
 
-	/**
-	 * Output.
-	 *
-	 * @param model the model
-	 */
-	void output(ConsoleModel model);
-
-	/**
-	 * Output error.
-	 *
-	 * @param model the model
-	 */
-	void outputError(ConsoleModel model);
-	
 	/**
 	 * Gets the input.
 	 *

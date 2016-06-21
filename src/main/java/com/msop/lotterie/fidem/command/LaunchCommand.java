@@ -1,5 +1,7 @@
 package com.msop.lotterie.fidem.command;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.msop.lotterie.fidem.configuation.GameConfiguration;
@@ -14,12 +16,13 @@ public class LaunchCommand implements Command {
 	 * @see com.msop.lotterie.fidem.command.Command#execute(com.msop.lotterie.fidem.game.Game)
 	 */
 	public void execute(Game game) {
-		for (int i = 0; i < GameConfiguration.getWinnerNumber(); i++) {
-			Integer random = ThreadLocalRandom.current().nextInt(0, game.getAvailableNumer().size());
-			game.getWinnerNumer().put(i, game.getAvailableNumer().get(random));
-			game.getAvailableNumer().remove(random);
+		List<Integer> tempList = new LinkedList<Integer>(game.getInitialAvailableNumer());
+		for (int i = 0; i < GameConfiguration.getInstance().getWinnerNumber(); i++) {
+			Integer random = ThreadLocalRandom.current().nextInt(0, tempList.size());
+			game.getWinnerNumer().put(i, tempList.get(random));
+			tempList.remove(i);
 		}
-		
+		tempList = null;
 	}
 
 }

@@ -18,7 +18,7 @@ public enum CommandRules {
 	
 	
 	/** The input command. */
-	private String inputCommand;
+	private String commandName;
 	
 	/** The command. */
 	private Command command;
@@ -30,7 +30,7 @@ public enum CommandRules {
 	 * @param command the command
 	 */
 	private CommandRules(String inputCommand, Command command) {
-		this.inputCommand = inputCommand;
+		this.commandName = inputCommand;
 		this.command = command;
 	}
 
@@ -39,8 +39,8 @@ public enum CommandRules {
 	 *
 	 * @return the input command
 	 */
-	public String getInputCommand() {
-		return inputCommand;
+	public String getCommandName() {
+		return commandName;
 	}
 
 	/**

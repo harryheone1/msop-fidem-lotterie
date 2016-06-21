@@ -2,7 +2,7 @@ package com.msop.lotterie.fidem;
 
 import java.io.IOException;
 
-import com.msop.lotterie.fidem.client.controller.ControllerWrapper;
+import com.msop.lotterie.fidem.client.GeneralClientFacade;
 import com.msop.lotterie.fidem.command.CommandFactory;
 import com.msop.lotterie.fidem.game.Game;
 import com.msop.lotterie.fidem.validator.ValidatorMapping;
@@ -55,10 +55,10 @@ public class WorkflowEngine {
 	 */
 	public void excute() throws IOException {
 		game.getCommands().clear();
-		game.getCommands().addAll(CommandFactory.buildCommands(this.command));
+		game.getCommands().addAll(CommandFactory.findCommands(this.command));
 		game.executeCommand();
 		
-		this.command = ControllerWrapper.getInputWithValidation(GameConstant.getEndMessageOfCommand(), ValidatorMapping.COMMAND.getValidators());
+		this.command = GeneralClientFacade.getInstance().getInputWithValidation(GameConstant.getEndMessageOfCommand(), ValidatorMapping.COMMAND.getValidators());
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class WorkflowEngine {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private void init() throws IOException {
-		this.command = ControllerWrapper.getInputWithValidation(GameConstant.getInitialMessage(), ValidatorMapping.COMMAND.getValidators());
+		this.command = GeneralClientFacade.getInstance().getInputWithValidation(GameConstant.getInitialMessage(), ValidatorMapping.COMMAND.getValidators());
 	}
 	
 	/**

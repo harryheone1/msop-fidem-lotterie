@@ -1,28 +1,32 @@
 package com.msop.lotterie.fidem.configuation;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class GameConfigurationTest {
+	@BeforeClass
+    public static void beforeClass() {
+    	GameConfiguration.getInstance(5, 7, 20.0);
+    }
 
 	@Test
 	public void testGameConfigurationAvailableNumber() {
-		Assert.assertEquals(GameConfiguration.initAvailableNumber().size(), GameConfiguration.INITIAL_NUMBER.intValue());
-		Assert.assertTrue(GameConfiguration.initAvailableNumber().contains(200));
+		Assert.assertTrue(GameConfiguration.getInstance().initAvailableNumber().contains(5));
 	}
 
 	@Test
 	public void testGameConfigurationTotalAmount() {
-		Assert.assertEquals(GameConfiguration.getWinnerTotalAmount().intValue(), 100);
+		Assert.assertEquals(GameConfiguration.getInstance().getWinnerTotalAmount().intValue(), 100);
 	}
 
 	@Test
 	public void testGameConfigurationShared() {
-		Assert.assertEquals(GameConfiguration.getSharedAmount(1).intValue(), 75);
-		Assert.assertEquals(GameConfiguration.getSharedAmount(2).intValue(), 15);
-		Assert.assertEquals(GameConfiguration.getSharedAmount(3).intValue(), 10);
-		Assert.assertEquals(GameConfiguration.getSharedAmount(4).intValue(), 0);
-		Assert.assertEquals(GameConfiguration.getSharedAmount(100).intValue(), 0);
+		Assert.assertEquals(GameConfiguration.getInstance().getSharedAmount(1).intValue(), 75);
+		Assert.assertEquals(GameConfiguration.getInstance().getSharedAmount(2).intValue(), 15);
+		Assert.assertEquals(GameConfiguration.getInstance().getSharedAmount(3).intValue(), 10);
+		Assert.assertEquals(GameConfiguration.getInstance().getSharedAmount(4).intValue(), 0);
+		Assert.assertEquals(GameConfiguration.getInstance().getSharedAmount(100).intValue(), 0);
 		
 	}
 }

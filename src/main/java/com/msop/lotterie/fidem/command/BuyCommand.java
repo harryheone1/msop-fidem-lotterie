@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.msop.lotterie.fidem.GameConstant;
-import com.msop.lotterie.fidem.client.controller.Controller;
-import com.msop.lotterie.fidem.client.controller.ControllerSimpleFactory;
-import com.msop.lotterie.fidem.client.controller.ControllerWrapper;
-import com.msop.lotterie.fidem.client.model.ConsoleModel;
+import com.msop.lotterie.fidem.client.GeneralClientFacade;
 import com.msop.lotterie.fidem.game.Game;
 import com.msop.lotterie.fidem.validator.InputValidator;
 import com.msop.lotterie.fidem.validator.NumberScopeValidator;
@@ -39,13 +36,13 @@ public class BuyCommand implements Command {
 				throw new IOException();
 			}
 			// ask name
-			String buyerName = ControllerWrapper.getInputWithValidation(GameConstant.INPUT_NAMEL_MESSAGE, ValidatorMapping.NAME.getValidators());
+			String buyerName = GeneralClientFacade.getInstance().getInputWithValidation(GameConstant.INPUT_NAMEL_MESSAGE, ValidatorMapping.NAME.getValidators());
 			this.buyerName = buyerName;
 			
 			// Add special validation of number input
 			List<InputValidator> validatorNumber = ValidatorMapping.NUMBER.getValidators();
 			validatorNumber.add(new NumberScopeValidator(game.getAvailableNumer(), GameConstant.NUMBER_NOT_VALID));
-			String numberChosenString = ControllerWrapper.getInputWithValidation(GameConstant.CHOOSE_NUMBER_MESSAGE, validatorNumber);
+			String numberChosenString = GeneralClientFacade.getInstance().getInputWithValidation(GameConstant.CHOOSE_NUMBER_MESSAGE, validatorNumber);
 			this.numberChosen = numberChosenString;
 			// ask number
 			Integer numberChosen = Integer.valueOf(numberChosenString);
@@ -57,9 +54,7 @@ public class BuyCommand implements Command {
 
 		} catch (IOException e) {
 			this.errorMessage = "Some errors happend when read or write data to console";
-			ConsoleModel model = new ConsoleModel(errorMessage, null);
-			Controller controller = ControllerSimpleFactory.getController(null);
-			controller.output(model);
+			GeneralClientFacade.getInstance().outputFetalErrorMessage(errorMessage);
 		}
 		
 	}

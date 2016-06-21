@@ -1,13 +1,14 @@
 package com.msop.lotterie.fidem;
 
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import com.msop.lotterie.fidem.client.model.ConsoleModelTest;
-import com.msop.lotterie.fidem.command.BuyCommandTest;
 import com.msop.lotterie.fidem.command.CommandBuilderTest;
 import com.msop.lotterie.fidem.command.LaunchCommandTest;
 import com.msop.lotterie.fidem.command.ResultCommandTest;
+import com.msop.lotterie.fidem.configuation.GameConfiguration;
 import com.msop.lotterie.fidem.configuation.GameConfigurationTest;
 import com.msop.lotterie.fidem.game.GameTest;
 import com.msop.lotterie.fidem.validator.CommandOutEnumValidatorTest;
@@ -27,10 +28,13 @@ import com.msop.lotterie.fidem.validator.ValidatorMappingTest;
 	GameTest.class,
 	GameConfigurationTest.class,
 	CommandBuilderTest.class,
-	BuyCommandTest.class,
 	LaunchCommandTest.class,
 	ResultCommandTest.class,
 	EntryWorkflowTest.class
 }) 
 public class LotoTest {
+	 @BeforeClass
+	    public static void beforeClass() {
+	    	GameConfiguration.getInstance(5, 7, 20.0);
+	    }
 }
